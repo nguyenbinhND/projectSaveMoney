@@ -3,6 +3,26 @@
 @section('content')
     <div class="container">
        <h4>Quản lý Khoản Thu </h4>
+
+        <div style="width: 15rem; margin: auto">
+            <form method="post" action="{{route('search')}}">
+                @csrf
+                <div class="form-group">
+                        <label for="title">Loại khoản thu</label>
+                        <input  type="text" class="form-control" name="title" value="{{old('title')}}">
+
+                     <label for="title">Thời gian</label>
+                     <input type="date" class="form-control" name="datetime" value="{{old('datetime')}}">
+
+                </div>
+
+                <div>
+                    <input style="margin: 10px"  type="submit" class="btn btn-warning" value="Search">
+                </div>
+
+            </form>
+        </div>
+
         <p>
                         <a class="btn btn-success" href="{{route('income.create')}}">Add New Income</a>
 {{--            <a class="btn btn-success" href="">Add New Income</a>--}}
@@ -40,8 +60,8 @@
                                 <td>{{$income->amount}}</td>
                                 <td>{{$income->note}}</td>
                                 <td>
-{{--                                    <a class="btn btn-dark" href='{{route("category.edit", $income->id)}}'>Edit</a> |--}}
-{{--                                    <form method="post" action="{{route('category.destroy', $income->id)}}" onsubmit='return confirm("sure ?")'>--}}
+                                    <a class="btn btn-dark" href='{{route("income.edit", $income->id)}}'>Edit</a> |
+                                    <form method="post" action="{{route('income.destroy', $income->id)}}" onsubmit='return confirm("sure ?")'>
                                         @csrf
                                         @method('DELETE')
                                         <input type="submit" value="Delete" class="btn btn-danger">

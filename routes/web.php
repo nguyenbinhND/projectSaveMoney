@@ -22,3 +22,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //Route::get('/income', [App\Http\Controllers\IncomeController::class, 'index'])->name('income');
 Route::resource("income", \App\Http\Controllers\IncomeController::class);
+Route::post('search',[App\Http\Controllers\IncomeController::class,'search'])->name('search');

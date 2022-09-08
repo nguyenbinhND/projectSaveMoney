@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\categoryIncome;
 use App\Models\income;
 use Illuminate\Http\Request;
+use App\Http\Controllers\CategoryIncomeController;
 
 class IncomeController extends Controller
 {
@@ -15,7 +17,11 @@ class IncomeController extends Controller
     public function index()
     {
         $lsincome = income::all();
-        return view('income.index')->with('lsincome', $lsincome);
+        $lscategoryincome = categoryIncome::all();
+
+        return view('income.index')->with('lsincome', $lsincome)
+                                        ->with('lscategoryincome', $lscategoryincome);;
+
     }
 
     /**
@@ -75,9 +81,27 @@ class IncomeController extends Controller
      * @param  \App\Models\income  $income
      * @return \Illuminate\Http\Response
      */
-    public function edit(income $income)
+    public function edit(Request $request, $id)
     {
-        //
+//        $this->validate($request,[
+//            'name'=> 'required |min:5|max:500'
+//        ]);
+        $dateTime = $request->dateTime;
+//      $income = $request->income;
+        $categoryExpenseld = $request->categoryExpenseld;
+        $amount = $request->amount;
+//        $note = $request->note;
+        $note = $request->input('note');
+
+        $cate = income::find($id);
+        $cate ->dateTime = $dateTime;
+//        $cate ->income = $income;
+        $cate ->categoryExpenseld = $categoryExpenseld;
+        $cate ->amount = $amount;
+        $cate ->note = $note;
+        $cate-> save();
+        $request->session()->flash('success', 'Update sucessfully');
+        return redirect(route('income.index'));
     }
 
     /**
@@ -98,8 +122,28 @@ class IncomeController extends Controller
      * @param  \App\Models\income  $income
      * @return \Illuminate\Http\Response
      */
-    public function destroy(income $income)
+    public function destroy(Request $request, $id)
     {
-        //
+        $cate = income::find($id);
+        $cate->delete();
+        // action([CategoryController::class, 'category.index']);
+        //   $cate-> save();
+        $request->session()->flash('success', 'Delete sucessfully');
+        //  return Redirect::action([CategoryController::class, 'category.index']);
+        return redirect(route('income.index'));
+    }
+
+
+
+    public function search(Request $request){
+        $title = $request->input('title');
+        if(is_null($title)){
+            $lsincome = income::all();
+            return view('income.index',compact('lsincome'));
+        }else{
+            $lsincome = income::all()->where('title',$title);
+            return view('income.index',compact('lsincome'));
+        }
+
     }
 }
