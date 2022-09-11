@@ -15,35 +15,39 @@
                 <label>Thời gian</label>
                 <input class="form-control" type="date" name="dateTime" value="{{old('dateTime')}}"/>
             </div>
-{{--            <div class="form-group">--}}
-{{--                <label>Loại khoản thu</label>--}}
-{{--                <input class="form-control" type="text" name="categoryExpenseld" value="{{old('categoryExpenseld')}}"/>--}}
-{{--            </div>--}}
+            {{--            <div class="form-group">--}}
+            {{--                <label>Loại khoản thu</label>--}}
+            {{--                <input class="form-control" type="text" name="categoryExpenseld" value="{{old('categoryExpenseld')}}"/>--}}
+            {{--            </div>--}}
 
             <div class="form-group ">
                 <label for="income_category">Loại khoản thu</label>
-                <select name="income_category_id" id="income_category" class="form-control select2">
-                    <option value="" selected>Please select</option>
-                    <option value="1" >Minus.</option>
-                    <option value="2" >Dolores.</option>
+                <select name="income_category" id="income_category" class="form-control select2"
+                        onchange="chooseSubCategory(this)">
+                    @foreach($lscategoryincome as $lscategory)
+                        <option value="{{$lscategory->id}}">{{$lscategory->name}}</option>
+                    @endforeach
+
                 </select>
             </div>
 
             <div class="form-group ">
                 <label for="income_category">Lựa chọn thành phần loại khoản thu</label>
-                <select name="income_category_id" id="income_category" class="form-control select2">
-                    <option value="" selected>Please select</option>
-                    <option value="1" >Minus.</option>
-                    <option value="2" >Dolores.</option>
+                <select name="income_category_id" id="subincome_category" class="form-control select2">
+                    @foreach($subcategory as $subidcategory)
+                        <option value="{{$subidcategory->id}}">{{$subidcategory->name}}</option>
+                    @endforeach
                 </select>
             </div>
 
+            <script type="text/javascript">
+                function chooseSubCategory(answer) {
+                    return (answer.value)
+                }
 
 
-            {{--            <div class="form-group">--}}
-{{--                <label>Lựa chọn thành phần loại khoản thu</label>--}}
-{{--                <input class="form-control" type="text" name="categoryExpenseld" value="{{old('categoryExpenseld')}}"/>--}}
-{{--            </div>--}}
+            </script>
+
 
             <div class="form-group">
                 <label>Số tiền</label>
