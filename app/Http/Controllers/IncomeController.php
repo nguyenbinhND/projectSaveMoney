@@ -78,7 +78,6 @@ class IncomeController extends Controller
 //        $this->validate($request,[
 //            'name'=> 'required |min:5|max:500'
 //        ]);
-
         $categoryid = $request->income_category_id;
         $dateTime = $request->dateTime;
         $amount = $request->amount;
@@ -130,7 +129,6 @@ class IncomeController extends Controller
         $cate = income::find($id);
         $request->session()->flash('success', 'Update sucessfully');
         return view('income.edit')->with(['cate' => $cate, 'lscategoryincome' => $lscategoryincome, 'subcategory' => $subcategory]);
-
     }
 
     /**
